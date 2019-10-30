@@ -1,0 +1,28 @@
+--payments(tno, pdate, amount)
+insert into payments values (100,'1991-03-29',221);
+insert into payments values (100,'1991-04-29',79);
+insert into payments values (101,'1992-05-13',150);
+insert into payments values (101,'1992-07-13',150);
+insert into payments values (107,'2019-07-10',300);
+insert into payments values (107,'2019-07-10',300);
+insert into payments values (107,'2019-07-10',302);
+insert into payments values (109,'2019-09-11',902);
+insert into payments values (108,'2019-07-20',200);
+insert into payments values (108,'2019-07-20',200);
+insert into payments values (102,'2019-05-13',200);
+insert into payments values (102,'2019-05-13',200);
+insert into payments values (103,'2017-03-28',200);
+insert into payments values (104,'2019-10-20',200);
+insert into payments values (105,'2019-06-26',200);
+
+--users(uid, pwd, utype, fname, lname, city)
+insert into users values ('fotray','46MuaZMf','a','Trayvon','Fox','PeaceRiver,AB')
+insert into users values ('boulil','Q6v9n8xn','o','Lillian', 'Bounds','Los Angeles, US')
+insert into users values ('rayada','uTT6HMcj','a','Adam','Rafiei','Tehran,Iran')
+insert into users values ('smijam','L4sdqPXD','o','James','Smith','Calgary,AB')
+insert into users values ('diswal','fU7zbcUH','a','Walt', 'Disney','Los Angeles, US')
+insert into users values ('bromar','ZpyDQU7t','o','Mary','Brown','Nordegg,AB')
+insert into users values ('trujoh','xSr9ZqJ9','a','John', 'Truyens','Los Angeles, US')
+insert into users values ('smilin','KV5h8Vsr','o','Linda','Smith','Ohaton,AB')
+insert into users values ('moumin','hjBBkF8E','a','Minnie', 'Mouse','Anaheim, US')
+insert into users values ('smimar','zvX4CNA9','o','Mary', 'Smith','Calgary,AB')
