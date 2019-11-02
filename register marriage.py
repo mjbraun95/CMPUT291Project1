@@ -1,6 +1,4 @@
 import datetime
-connection = None
-cursor = None
 
 def register_a_marriage(username):
     global connection, cursor
