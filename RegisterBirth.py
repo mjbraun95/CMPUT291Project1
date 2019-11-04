@@ -1,2 +1,2 @@
-def register_a_birth(connection, cursor):
+def register_a_birth():
     return 0

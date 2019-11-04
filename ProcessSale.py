@@ -1,7 +1,8 @@
 import datetime
+import Connect
 
-def process_a_bill_of_sale(connection, cursor):
-    # global connection, cursor
+def process_a_bill_of_sale():
+    connection, cursor = Connect.connection, Connect.cursor
 
     current_reg = None
     #get vin
@@ -32,7 +33,8 @@ def process_a_bill_of_sale(connection, cursor):
         new_owner = new_owner.split()
         new_owner = [new_owner[0].capitalize(), new_owner[1].capitalize()]
         #if new owner not in persons register a birth()
-        check(new_owner)
+        if check(new_owner) == 1:
+            return
         # else continue
         #get plate number
         invalid_plate = True
@@ -65,3 +67,13 @@ def process_a_bill_of_sale(connection, cursor):
              "vin": vin, "fname": new_owner[0], "lname": new_owner[1]})
 
     connection.commit()
+
+def check(new_owner):
+    connection, cursor = Connect.connection, Connect.cursor
+    cursor.execute('SELECT * FROM persons where fname = :first and lname = :last;', {"first": new_owner[0], "last": new_owner[1]})
+    if len(cursor.fetchall()) == 0:
+        #call register a birth function
+        print("ERROR: New Owner could not be found in the database! Returning to menu...")
+        return 1
+    else:
+        return 0

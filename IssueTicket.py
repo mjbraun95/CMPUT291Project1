@@ -1,66 +1,73 @@
+import datetime
+import Connect
 
-def issue_a_ticket(connection, cursor):
-    # global connection, cursor
+debugIssueTicket = True
 
+def issue_a_ticket():
+    connection, cursor = Connect.connection, Connect.cursor
     current_reg = None
     #get regno
+    if debugIssueTicket == True:
+        print("cursor: {}".format(cursor))
+        cursor.execute('SELECT * FROM registrations')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+
     regno = input("vehicle regno: ")
     regno_not_exist = True
-    # while regno is not valid keep asking
+    # while regno is not valid keep askingif debugIssueTicket == True:
+    # get owner + vehicle information
     while regno_not_exist:
-        cursor.execute('SELECT * FROM registrations where regno = :regno',
+        cursor.execute('SELECT * FROM registrations JOIN vehicles WHERE registrations.regno = :regno AND registrations.vin = vehicles.vin',
                        {"regno": regno})
         current_reg = cursor.fetchall()
-        print(current_reg)
         if len(current_reg) != 0:
+            print(current_reg)
             regno_not_exist = False
         else:
             regno = input("input a valid vehicle regno: ")
-    #get current owner
-    current_owner = input("first name followed by last name of current owner, seperated by a space: ")
-    current_owner = current_owner .split()
-    current_owner = [current_owner[0].capitalize(), current_owner[1].capitalize()]
-    #if invalid current owner cancel
-    if current_reg[0][5] != current_owner[0] or current_reg[0][6] != current_owner[1]:
-        print("data provided does not match, transfer cannot be made")
-        return
-    else:
-        #else if valid current owner continue
-        #get new owner
-        new_owner = input("first name followed by last name of new owner, seperated by a space: ")
-        new_owner = new_owner.split()
-        new_owner = [new_owner[0].capitalize(), new_owner[1].capitalize()]
-        #if new owner not in persons register a birth()
-        # check(new_owner)
-        # else continue
-        #get plate number
-        invalid_plate = True
-        plate = input("plate number, with maximum of 7 characters: ")
-        while invalid_plate:
-            if len(plate) <= 7:
-                invalid_plate = False
-            else:
-                plate = input("input a valid plate number, with maximum of 7 characters: ")
 
-        #process sale
+    fname = current_reg[0][5]
+    lname = current_reg[0][6]
+    violationDate = input("Please enter the violation date: ")
+    if violationDate == "":
+        violationDate = datetime.datetime.today().strftime('%Y-%m-%d')
+        print("Set violation date to {}".format(violationDate))
+    violationText = input("Please enter the violation text: ")
+    fineAmount = input("Please enter the fine amount: ")
 
-        #update expiry of old registration
-        today = datetime.date.today()
-        cursor.execute('UPDATE registrations SET expiry = :today where regno = :current;', {"today": today, "current": current_reg[0][0]})
+    #insert new ticket no
+    cursor.execute('SELECT max(tno) FROM tickets ')
+    maxtno = cursor.fetchall()
 
-        #insert new registration
-        cursor.execute('SELECT max(regno) FROM registrations ')
-        maxregno = cursor.fetchall()
+    # registration number = unique
+    newtno = maxtno[0][0] + 1
 
-        # registration number = unique
-        newregno = maxregno[0][0] + 1
+    if debugIssueTicket == True:
+        print("TICKETS BEFORE:")
+        cursor.execute('SELECT * FROM tickets')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
 
-        #expirydate
-        expiry = today.replace(year=today.year + 1)
+    cursor.execute(
+        'INSERT INTO tickets VALUES (:newtno, :regno, :fineAmount, :violationText, :violationDate);',
+        {"newtno": newtno, "regno": regno, "fineAmount": fineAmount, "violationText": violationText,
+            "violationDate": violationDate})
 
-        cursor.execute(
-            'insert into registrations values (:newregno, :today, :expiry, :plate, :regno, :fname, :lname);',
-            {"newregno": newregno, "today": today, "expiry": expiry, "plate": plate,
-             "regno": regno, "fname": new_owner[0], "lname": new_owner[1]})
+    if debugIssueTicket == True:
+        print("TICKETS AFTER:")
+        cursor.execute('SELECT * FROM tickets')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
 
+    print("A ticket has been created for {} {}.".format(fname, lname))
     connection.commit()

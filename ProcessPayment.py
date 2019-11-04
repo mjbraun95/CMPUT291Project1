@@ -1,7 +1,8 @@
 import datetime
+import Connect
 
 def process_a_payment(connection, cursor):
-    # global connection, cursor
+    connection, cursor = Connect.connection, Connect.cursor
 
     ticket = None
     today = datetime.date.today()

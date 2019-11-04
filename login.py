@@ -15,27 +15,26 @@ cursor = None
 debugLogin = True
 
 def login():
+    Connect.connect()
+    connection, cursor = Connect.connection, Connect.cursor
+    if debugLogin == True:
+        cursor.execute('SELECT * FROM users')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
     username = input("Enter username: ")
     password = getpass()
-
-    Connect.connect()
-    # Connect.listTables()
-    connection, cursor = Connect.connection, Connect.cursor
     cursor.execute('SELECT * FROM users WHERE users.uid=?;',(username,))
-    # cursor.execute("SELECT table FROM sqlite_master WHERE type = 'table' AND tbl_name = 'users'")
     userLoginQuery = cursor.fetchone()
-    if userLoginQuery == None:
-        print("Invalid username or password. Please try again.")
-        return None
     if debugLogin == True:
         print("Username: {}".format(username))
         print("Password: {}".format(password))
         print("userLoginQuery: {}".format(userLoginQuery))
-        print("len(userLoginQuery): {}".format(len(userLoginQuery)))
-        cursor.execute('SELECT * FROM users')
-        for i in range(6):
-            debugQuery = cursor.fetchone()
-            print(debugQuery)
+    if userLoginQuery == None:
+        print("Invalid username or password. Please try again.")
+        return None
     connection.commit()
 
     uid = userLoginQuery[0]
@@ -52,7 +51,7 @@ def login():
         print("Invalid username or password. Please try again.")
         return None
 
-def logoff(connection, cursor):
+def logoff():
     uid = None
     pwd = None
     utype = None
