@@ -1,4 +1,8 @@
+import datetime
+import Connect
+
 def pre_reg(person):
+    connection, cursor = Connect.connection, Connect.cursor
     # bdate = True
     bdate = input("Enter the birth date of person to register, in format 'YYYY-MM-DD': ")
     isValidDate = True
@@ -29,8 +33,7 @@ def pre_reg(person):
     register_a_person(person,bdate,bplace,address,phone)
 
 def register_a_person(person,bdate,bplace,address,phone):
-    #persons(fname, lname, bdate, bplace, address, phone)
-
+    connection, cursor = Connect.connection, Connect.cursor
     #register the person
     #persons(fname, lname, bdate, bplace, address, phone)
     cursor.execute(
@@ -41,7 +44,7 @@ def register_a_person(person,bdate,bplace,address,phone):
     connection.commit()
 
 def check(person):
-    global connection, cursor
+    connection, cursor = Connect.connection, Connect.cursor
     cursor.execute('SELECT * FROM persons where fname = :first and lname = :last;', {"first": person[0], "last": person[1]})
     if len(cursor.fetchall()) == 0:
         print('person not in database. registering person-->')

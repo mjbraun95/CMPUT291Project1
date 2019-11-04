@@ -6,6 +6,8 @@ import FindCarOwner
 import RegisterMarriage
 import Login
 import Connect
+import RenewVehicleRegistration
+import RegisterBirth
 
 debugInterface = True
 
@@ -25,11 +27,11 @@ def interface(connection, cursor, userLoginQuery):
         while q == False:
             userInput = input("What would you like to do?:\n    rb - Register a Birth\n    rm - Register a marriage\n    rvr - Renew Vehicle Registration\n    pbs - Process a Bill of Sale\n    pp - Process a Payment\n    gda - Get a Driver Abstract\n    lo - log out\n    q - Quit\n")
             if userInput == "rb":
-                break
+                RegisterBirth.register_a_birth(uid)
             elif userInput == "rm":
                 RegisterMarriage.register_a_marriage(uid)
             elif userInput == "rvr":
-                break
+                RenewVehicleRegistration.renew_vehicle_registration()
             elif userInput == "pbs":
                 ProcessSale.process_a_bill_of_sale()
             elif userInput == "pp":
@@ -37,7 +39,7 @@ def interface(connection, cursor, userLoginQuery):
             elif userInput == "gda":
                 break
             elif userInput == "lo":
-                Login.logoff(connection, cursor)
+                Login.logoff()
             elif userInput == "q":
                 exit()
             else:

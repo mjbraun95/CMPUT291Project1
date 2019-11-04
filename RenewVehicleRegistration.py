@@ -1,8 +1,12 @@
+import datetime
+import Connect
+
 #function 3
 # Renew a vehicle registration.The user should be able to provide an existing registration number and renew the registration.
 # The system should set the new expiry date to one year from today's date if the current registration either has expired
 # or expires today. Otherwise, the system should set the new expiry to one year after the current expiry date.
 def renew_vehicle_registration():
+    connection, cursor = Connect.connection, Connect.cursor
     #get registration number
 
     reg = None

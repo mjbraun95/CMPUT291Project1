@@ -1,6 +1,7 @@
 import datetime
 import RegisterBirth
 import Connect
+import RegisterPerson
 
 debugRegisterMarriage = True
 
@@ -17,11 +18,11 @@ def register_a_marriage(username):
     partner1 = input("first name followed by last name of partner 1, seperated by a space: ")
     partner1 = partner1.split()
     partner1 = [partner1[0].capitalize(), partner1[1].capitalize()]
-    check(partner1)
+    RegisterPerson.check(partner1, username)
     partner2 = input("first name followed by last name of partner 2, seperated by a space: ")
     partner2 = partner2.split()
     partner2 = [partner2[0].capitalize(), partner2[1].capitalize()]
-    check(partner2)
+    RegisterPerson.check(partner2, username)
 
     cursor.execute('SELECT max(regno) FROM marriages ')
     maxregno = cursor.fetchall()
@@ -62,10 +63,3 @@ def register_a_marriage(username):
                 print(debugQuery)
 
     connection.commit()
-
-def check(person):
-    connection, cursor = Connect.connection, Connect.cursor
-    cursor.execute('SELECT * FROM persons where fname = :first and lname = :last;', {"first": person[0], "last": person[1]})
-    if len(cursor.fetchall()) == 0:
-        #call register a birth function
-        RegisterBirth.register_a_birth()

@@ -1,7 +1,7 @@
 import datetime
 import Connect
 
-def process_a_payment(connection, cursor):
+def process_a_payment():
     connection, cursor = Connect.connection, Connect.cursor
 
     ticket = None
