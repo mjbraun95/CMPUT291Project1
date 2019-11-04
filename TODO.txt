@@ -13,3 +13,5 @@ Register group to list
 Schedule demo time
 
 Merge pdfs
+
+cursor.execute('SELECT tickets.tno, tickets.vdate, tickets.violation, tickets.fine, tickets.regno, vehicles.make, vehicles.model FROM demeritNotices JOIN registrations JOIN tickets JOIN vehicles WHERE demeritNotices.fname = :fname AND demeritNotices.lname = :lname AND demeritNotices.fname = registrations.fname AND demeritNotices.lname = registrations.lname AND tickets.regno = registrations.regno AND vehicles.vin = registrations.vin', {"fname": fname, "lname": lname})
