@@ -46,8 +46,13 @@ def process_a_bill_of_sale():
                     # new_owner = new_owner.split()
                     # new_owner = [new_owner[0].capitalize(), new_owner[1].capitalize()]
         #if new owner not in persons register a birth()
-        if RegisterPerson.check(new_owner) == 1:
+        cursor.execute("Select * from persons where fname = :fname and lname = :lname", {"fname": new_owner[0], "lname": new_owner[1]})
+        temp_row = cursor.fetchall()
+        if len(temp_row) != 1:
+            print("new owner not in database, cannot process sale")
             return
+        #if RegisterPerson.check(new_owner) == 1:
+            #return
         # else continue
         #get plate number
         invalid_plate = True
