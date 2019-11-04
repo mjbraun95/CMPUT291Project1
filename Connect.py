@@ -1,5 +1,4 @@
 import sqlite3
-import pandas as pd
 
 debugConnect = True
 connection = None
@@ -22,18 +21,13 @@ def reload():
     tables = open("./Data/tables.txt")
     data = open("./Data/data.txt")
     tables_sql = tables.readline()
-    # print(pd.read_sql_query(tables_sql, connection))
+
     cnt = 1
     while tables_sql:
         if debugConnect == True:
             print("tables_sql {}: {}".format(cnt, tables_sql))
-            # print(tables_sql)
-        # cursor.execute(tables_sql)
         tables_sql = tables.readline()
         cnt += 1
-
-    # data_sql = data.readline()
-    # print(pd.read_sql_query(data_sql, connection))
 
 def commit():
     print("committing...", end=" ")
@@ -43,4 +37,3 @@ def commit():
 if __name__ == "__main__":
     listTables()
     commit()
-    # reload()

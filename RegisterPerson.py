@@ -10,7 +10,7 @@ def pre_reg(person):
     while isValidDate and bdate != '':
         try:
             year, month, day = bdate.split('-')
-            datetime.datetime(int(year), int(month), int(day))
+            datetime.datetime(int(year), int(month), int(day    ))
             break
         except ValueError:
             bdate = input("Enter the date in format 'YYYY-MM-DD': ")

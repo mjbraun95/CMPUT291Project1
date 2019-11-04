@@ -11,6 +11,9 @@ import Connect
 # the newborn are set to those of the mother. If any of the parents is not in the database, the system should get
 # information about the parent including first name, last name, birth date, birth place, address and phone.
 # For each parent, any column other than the first name and last name can be null if it is not provided.
+
+debugRegisterBirth = True
+
 def register_a_birth(username):
     connection, cursor = Connect.connection, Connect.cursor
     #get first name and last name
@@ -88,9 +91,28 @@ def register_a_birth(username):
     #register the birth
     #insert into births values (1,'Mary','Smith','1920-04-04','Ohaton,AB','F','James','Smith','Linda','Smith');
     #births(regno, fname, lname, regdate, reg_place, gender, f_fname, f_lname, m_fname, m_lname)
+
+    if debugRegisterBirth == True:
+        print("BIRTHS BEFORE")
+        cursor.execute('SELECT fname, lname FROM users')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+
     cursor.execute(
         'insert into births values (:regno, :fname, :lname, :today, :reg_place, :gender, :f_fname, :f_lname, :m_fname, :m_lname);',
         {"regno": newregno, "fname": newborn_name[0], "lname": newborn_name[1], "today": today, "reg_place": reg_place, "gender": gender, "f_fname": Father[0],
          "f_lname": Father[1],  "m_fname": Mother[0],  "m_lname": Mother[1]})
+
+    if debugRegisterBirth == True:
+        print("BIRTHS AFTER")
+        cursor.execute('SELECT fname, lname FROM users')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
 
     connection.commit()

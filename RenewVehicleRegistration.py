@@ -1,14 +1,23 @@
 import datetime
 import Connect
 
+debugRenewVehicleRegistration = True
+
 #function 3
 # Renew a vehicle registration.The user should be able to provide an existing registration number and renew the registration.
 # The system should set the new expiry date to one year from today's date if the current registration either has expired
 # or expires today. Otherwise, the system should set the new expiry to one year after the current expiry date.
 def renew_vehicle_registration():
     connection, cursor = Connect.connection, Connect.cursor
+    if debugRenewVehicleRegistration == True:
+        cursor.execute('SELECT * FROM registrations')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+    
     #get registration number
-
     reg = None
     regno = None
     while not reg:
@@ -28,7 +37,26 @@ def renew_vehicle_registration():
     else:
         expiry = expiry.replace(year=expiry.year + 1)
 
+    
+    if debugRenewVehicleRegistration == True:
+        print("REGISTRATIONS BEFORE")
+        cursor.execute('SELECT * FROM registrations')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
     #update table
     cursor.execute('UPDATE registrations SET expiry = :expiry where regno = :regno;',
                    {"expiry":expiry, "regno": regno})
+
+    if debugRenewVehicleRegistration == True:
+        print("REGISTRATIONS AFTER")
+        cursor.execute('SELECT * FROM registrations')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+
     connection.commit()
