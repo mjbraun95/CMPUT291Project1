@@ -20,10 +20,10 @@ def register_a_birth(username):
     newborn_name = GetName.get_name("newborn")
 
     #get gender
-    gender = input("gender of newborn. 'F' for female and 'M' fro male: ")
+    gender = input("gender of newborn. 'F' for female and 'M' for male: ")
     gender = gender.capitalize()
     while gender != 'F' and gender != 'M':
-        gender = input("input a valid gender of newborn. 'F' for female and 'M' fro male: ")
+        gender = input("input a valid gender of newborn. 'F' for female and 'M' for male: ")
 
     #birth date
     bdate = input("Enter the birth date in format 'YYYY-MM-DD': ")
@@ -94,7 +94,7 @@ def register_a_birth(username):
 
     if debugRegisterBirth == True:
         print("BIRTHS BEFORE")
-        cursor.execute('SELECT fname, lname FROM users')
+        cursor.execute('SELECT fname, lname FROM births')
         debugQuery = 0
         while debugQuery != None:
             debugQuery = cursor.fetchone()
@@ -108,7 +108,7 @@ def register_a_birth(username):
 
     if debugRegisterBirth == True:
         print("BIRTHS AFTER")
-        cursor.execute('SELECT fname, lname FROM users')
+        cursor.execute('SELECT fname, lname FROM births')
         debugQuery = 0
         while debugQuery != None:
             debugQuery = cursor.fetchone()

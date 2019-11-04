@@ -23,7 +23,6 @@ def process_a_payment():
         if ticket_num.isdigit():
             cursor.execute('SELECT * FROM tickets where tno = :ticket_num', {"ticket_num": ticket_num})
             ticket = cursor.fetchall()
-            print(len(ticket))
             if len(ticket) != 0:
                 invalid_tno = False
             else:
