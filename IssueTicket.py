@@ -1,20 +1,21 @@
-def process_a_bill_of_sale():
-    global connection, cursor
+
+def issue_a_ticket(connection, cursor):
+    # global connection, cursor
 
     current_reg = None
-    #get vin
-    vin = input("vehicle vin: ")
-    vin_not_exist = True
-    # while vin is not valid keep asking
-    while vin_not_exist:
-        cursor.execute('SELECT * FROM registrations where vin = :vin',
-                       {"vin": vin})
+    #get regno
+    regno = input("vehicle regno: ")
+    regno_not_exist = True
+    # while regno is not valid keep asking
+    while regno_not_exist:
+        cursor.execute('SELECT * FROM registrations where regno = :regno',
+                       {"regno": regno})
         current_reg = cursor.fetchall()
         print(current_reg)
         if len(current_reg) != 0:
-            vin_not_exist = False
+            regno_not_exist = False
         else:
-            vin = input("input a valid vehicle vin: ")
+            regno = input("input a valid vehicle regno: ")
     #get current owner
     current_owner = input("first name followed by last name of current owner, seperated by a space: ")
     current_owner = current_owner .split()
@@ -30,7 +31,7 @@ def process_a_bill_of_sale():
         new_owner = new_owner.split()
         new_owner = [new_owner[0].capitalize(), new_owner[1].capitalize()]
         #if new owner not in persons register a birth()
-        check(new_owner)
+        # check(new_owner)
         # else continue
         #get plate number
         invalid_plate = True
@@ -58,8 +59,8 @@ def process_a_bill_of_sale():
         expiry = today.replace(year=today.year + 1)
 
         cursor.execute(
-            'insert into registrations values (:newregno, :today, :expiry, :plate, :vin, :fname, :lname);',
+            'insert into registrations values (:newregno, :today, :expiry, :plate, :regno, :fname, :lname);',
             {"newregno": newregno, "today": today, "expiry": expiry, "plate": plate,
-             "vin": vin, "fname": new_owner[0], "lname": new_owner[1]})
+             "regno": regno, "fname": new_owner[0], "lname": new_owner[1]})
 
     connection.commit()
