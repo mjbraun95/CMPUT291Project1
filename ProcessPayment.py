@@ -57,9 +57,14 @@ def process_a_payment():
                 print(debugQuery)
 
     #process payment
-    cursor.execute(
-        'insert into payments values (:tno, :pdate, :amount);',
-        {"tno": ticket_num, "pdate": today, "amount": amount})
+    cursor.execute("select * from payments where tno = :ticket_num and pdate = :today", {"tno": ticket_num, "pdate": today})
+    temp_row = cursor.fetchall()
+    if len (temp_row) == 0:
+        cursor.execute(
+            'insert into payments values (:tno, :pdate, :amount);',
+            {"tno": ticket_num, "pdate": today, "amount": amount})
+    else:
+        print("A payment has already been made for this ticket today, another payment cannot be made today")
 
     if debugProcessPayment == True:
         print("PAYMENTS AFTER")
