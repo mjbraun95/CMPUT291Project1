@@ -25,7 +25,7 @@ def interface(connection, cursor, userLoginQuery):
         print("cursor: {}".format(cursor))
     if utype == "a":
         while q == False:
-            userInput = input("What would you like to do?:\n    rb - Register a Birth\n    rm - Register a marriage\n    rvr - Renew Vehicle Registration\n    pbs - Process a Bill of Sale\n    pp - Process a Payment\n    gda - Get a Driver Abstract\n    lo - log out\n    q - Quit\n")
+            userInput = input("What would you like to do?:\n    rb - Register a Birth\n    rm - Register a marriage\n    rvr - Renew Vehicle Registration\n    pbs - Process a Bill of Sale\n    pp - Process a Payment\n    gda - Get a Driver Abstract\n    lo - log out\n    q - Quit\n").lower()
             if userInput == "rb":
                 RegisterBirth.register_a_birth(uid)
             elif userInput == "rm":
@@ -46,7 +46,7 @@ def interface(connection, cursor, userLoginQuery):
                 print("Invalid command. Please try again.")
     elif utype == "o":
         while q == False:
-            userInput = input("What would you like to do?:\n    it - Issue a Ticket\n    fca - Find a Car Owner\n    lo - log out\n    q - Quit\n")
+            userInput = input("What would you like to do?:\n    it - Issue a Ticket\n    fca - Find a Car Owner\n    lo - log out\n    q - Quit\n").lower()
             if userInput == "it":
                 IssueTicket.issue_a_ticket()
             elif userInput == "fca":

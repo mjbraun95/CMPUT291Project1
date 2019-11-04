@@ -1,8 +1,17 @@
 import datetime
 import Connect
 
+debugProcessPayment = True
+
 def process_a_payment():
     connection, cursor = Connect.connection, Connect.cursor
+    if debugProcessPayment == True:
+        cursor.execute('SELECT * FROM payments')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
 
     ticket = None
     today = datetime.date.today()
@@ -14,7 +23,6 @@ def process_a_payment():
         if ticket_num.isdigit():
             cursor.execute('SELECT * FROM tickets where tno = :ticket_num', {"ticket_num": ticket_num})
             ticket = cursor.fetchall()
-            print(len(ticket))
             if len(ticket) != 0:
                 invalid_tno = False
             else:
@@ -39,9 +47,27 @@ def process_a_payment():
         else:
             amount = input("Input a valid payment amount: ")
 
+    if debugProcessPayment == True:
+        print("PAYMENTS BEFORE")
+        cursor.execute('SELECT * FROM payments')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+
     #process payment
     cursor.execute(
         'insert into payments values (:tno, :pdate, :amount);',
         {"tno": ticket_num, "pdate": today, "amount": amount})
+
+    if debugProcessPayment == True:
+        print("PAYMENTS AFTER")
+        cursor.execute('SELECT * FROM payments')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
 
     connection.commit()

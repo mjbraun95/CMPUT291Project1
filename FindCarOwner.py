@@ -67,7 +67,7 @@ def find_a_car_owner():
     tryAgain = None
     searchCar()
     while tryAgain != "n":
-        tryAgain = input("Would you like to try another search query? (Y/n)")
+        tryAgain = input("Would you like to try another search query? (Y/n): ")
         if tryAgain == "" or tryAgain == "y":
             searchCar()
         elif tryAgain != "n":

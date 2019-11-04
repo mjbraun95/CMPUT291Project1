@@ -24,7 +24,7 @@ def login():
             debugQuery = cursor.fetchone()
             if debugQuery != None:
                 print(debugQuery)
-    username = input("Enter username: ")
+    username = input("Enter username: ").lower()
     password = getpass()
     cursor.execute('SELECT * FROM users WHERE users.uid=?;',(username,))
     userLoginQuery = cursor.fetchone()
