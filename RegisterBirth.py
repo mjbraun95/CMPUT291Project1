@@ -1,2 +1,2 @@
-def register_a_marriage(connection, cursor):
+def register_a_birth(connection, cursor):
     return 0
