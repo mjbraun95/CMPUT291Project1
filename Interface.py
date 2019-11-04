@@ -28,10 +28,6 @@ def interface(connection, cursor, userLoginQuery):
                 break
             elif userInput == "rm":
                 RegisterMarriage.register_a_marriage(uid)
-            elif userInput == "rb":
-                break
-            elif userInput == "rb":
-                break
             elif userInput == "rvr":
                 break
             elif userInput == "pbs":
