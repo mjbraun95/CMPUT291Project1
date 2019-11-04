@@ -18,6 +18,11 @@ def register_a_birth(username):
     connection, cursor = Connect.connection, Connect.cursor
     #get first name and last name
     newborn_name = GetName.get_name("newborn")
+    cursor.execute("select * from persons where fname = :fname and lname = :lname", {"fname": newborn_name[0],"lname": newborn_name[1]})
+    temp_row = cursor.fetchall()
+    if len(temp_row) != 0:
+        print("person already in database, cannot register birth")
+        return
 
     #get gender
     gender = input("gender of newborn. 'F' for female and 'M' for male: ")
