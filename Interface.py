@@ -8,6 +8,7 @@ import Login
 import Connect
 import RenewVehicleRegistration
 import RegisterBirth
+import GetDriverAbstract
 
 debugInterface = True
 
@@ -37,7 +38,7 @@ def interface(connection, cursor, userLoginQuery):
             elif userInput == "pp":
                 ProcessPayment.process_a_payment()
             elif userInput == "gda":
-                break
+                GetDriverAbstract.get_driver_abstract()
             elif userInput == "lo":
                 Login.logoff()
             elif userInput == "q":

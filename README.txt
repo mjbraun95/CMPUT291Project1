@@ -1,6 +1,7 @@
 Mini-Project 1
 mjbraun - 1497171
 hettiara - 1580077
+junhong1 - 1507735
 
 Running Instructions:
     1. From the command line, enter the command:

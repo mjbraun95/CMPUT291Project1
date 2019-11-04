@@ -1,0 +1,15 @@
+Fix error
+Last function
+    Error w/invalid input
+
+
+Vehicles no new people!
+SQL injections
+Newborn name must be UNIQUE (no same full name + last name)
+
+
+Change debugs to false?
+Register group to list
+Schedule demo time
+
+Merge pdfs

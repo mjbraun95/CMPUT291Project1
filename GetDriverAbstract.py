@@ -1,16 +1,26 @@
 import datetime
 import Connect
 
+debugGetDriverAbstract = True
+
 def get_driver_abstract():
+    connection, cursor = Connect.connection, Connect.cursor
+    if debugGetDriverAbstract == True:
+        cursor.execute('SELECT fname, lname FROM users')
+        debugQuery = 0
+        while debugQuery != None:
+            debugQuery = cursor.fetchone()
+            if debugQuery != None:
+                print(debugQuery)
+
     '''
     number of tickets, 
     the number of demerit notices, 
     the total number of demerit points 
     received both within the past two years and within the lifetime
     '''
-    connection, cursor = Connect.connection, Connect.cursor
 
-    name = raw_input("Enter full name: ")
+    name = input("Enter full name: ")
     fname, lname = name.split()
 
     regno_list = []
@@ -21,9 +31,11 @@ def get_driver_abstract():
 
     cursor.execute("""  SELECT  regno 
                         FROM    registrations
-                        WHERE   fname = :f_name, lname = :l_name; """,
+                        WHERE   fname = :f_name AND lname = :l_name; """,
                     {"f_name":fname, "l_name":lname}
                     )
+    # cursor.execute('SELECT address, phone FROM persons where fname = :first and lname = :last;',
+    #                {"first": Mother[0], "last": Mother[1]})
     rows = cursor.fetchall()
     for rn in rows:
         regno_list.append(rn[0])
@@ -32,9 +44,19 @@ def get_driver_abstract():
     TODO
     """
     while True:
-        ordering = raw_input("Order from latest to oldest?")
+        ordering = input("Order from latest to oldest? (Y/n)")
 
-        if ordering.upper() == "Y":
+        if debugGetDriverAbstract == True:
+            cursor.execute('SELECT * FROM demeritNotices JOIN registrations JOIN tickets WHERE demeritNotices.fname = :fname AND demeritNotices.lname = :lname AND demeritNotices.fname = registrations.fname AND demeritNotices.lname = registrations.lname AND tickets.regno = registrations.regno', {"fname": fname, "lname": lname})
+            debugQuery = 0
+            while debugQuery != None:
+                debugQuery = cursor.fetchone()
+                if debugQuery != None:
+                    print(debugQuery)
+
+
+        if ordering.upper() == "Y" or ordering.upper() == "":
+
             ##
             break
         elif ordering.upper() == "N":
@@ -44,9 +66,9 @@ def get_driver_abstract():
             continue
 
     while True:
-        view_more = raw_input("View more?")
+        view_more = input("View more? (Y/n)")
 
-        if view_more.upper() == "Y":
+        if view_more.upper() == "Y" or ordering.upper() == "":
             ##
             break
         elif view_more.upper() == "N":

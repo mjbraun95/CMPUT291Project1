@@ -99,7 +99,7 @@ def register_a_birth(username):
 
     if debugRegisterBirth == True:
         print("BIRTHS BEFORE")
-        cursor.execute('SELECT fname, lname FROM births')
+        cursor.execute('SELECT * FROM births')
         debugQuery = 0
         while debugQuery != None:
             debugQuery = cursor.fetchone()
@@ -113,7 +113,7 @@ def register_a_birth(username):
 
     if debugRegisterBirth == True:
         print("BIRTHS AFTER")
-        cursor.execute('SELECT fname, lname FROM births')
+        cursor.execute('SELECT * FROM births')
         debugQuery = 0
         while debugQuery != None:
             debugQuery = cursor.fetchone()
